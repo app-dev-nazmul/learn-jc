@@ -24,22 +24,37 @@ import com.example.learnjc.ui.theme.LearnJCTheme
 
 
 @Composable
-fun WellnessTaskItem(modifier: Modifier = Modifier, taskName: String) {
+fun WellnessTaskItem(modifier: Modifier = Modifier, onClose: () -> Unit, taskName: String) {
     var checkState by rememberSaveable { mutableStateOf(false) }
 
-    WellnessTaskItem(modifier=modifier, taskName = taskName, onCheckChanged = { newValue ->  checkState = newValue}, onClose = {}, checked = checkState)
+    WellnessTaskItem(
+        modifier = modifier,
+        taskName = taskName,
+        onCheckChanged = { newValue -> checkState = newValue },
+        onClose = onClose,
+        checked = checkState
+    )
 }
+
 @Composable
-fun WellnessTaskItem(modifier: Modifier = Modifier, taskName: String, onCheckChanged: (Boolean) -> Unit, onClose: ()-> Unit, checked: Boolean  ) {
+fun WellnessTaskItem(
+    modifier: Modifier = Modifier,
+    taskName: String,
+    onCheckChanged: (Boolean) -> Unit,
+    onClose: () -> Unit,
+    checked: Boolean
+) {
     Row(modifier = modifier, verticalAlignment = Alignment.CenterVertically) {
-        Text(text = taskName, modifier = Modifier
-            .weight(1f)
-            .padding(start = 16.dp))
+        Text(
+            text = taskName, modifier = Modifier
+                .weight(1f)
+                .padding(start = 16.dp)
+        )
         Checkbox(
             checked = checked,
             onCheckedChange = onCheckChanged
         )
-        IconButton(onClick = {onClose}) { Icon(Icons.Filled.Close, contentDescription = "Close") }
+        IconButton(onClick = onClose ) { Icon(Icons.Filled.Close, contentDescription = "Close") }
     }
 }
 
@@ -51,6 +66,6 @@ fun WellnessTaskItem(modifier: Modifier = Modifier, taskName: String, onCheckCha
 )
 @Composable
 fun PreviewWellnessTaskItem() {
-    LearnJCTheme { WellnessTaskItem(taskName = "task") }
+    LearnJCTheme { WellnessTaskItem(taskName = "task", onClose = {}) }
 }
 
