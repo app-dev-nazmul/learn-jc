@@ -4,14 +4,16 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.*
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import com.example.learnjc.data.SurahViewModel
 import com.example.learnjc.ui.theme.LearnJCTheme
+import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,10 +21,21 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             LearnJCTheme {
+                val viewModel: SurahViewModel = getViewModel()
+                val surahList by viewModel.readAllSurah.collectAsState(initial = emptyList())
+
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    WellnessScreen(
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                    if (surahList.isEmpty()) {
+                        Column(modifier = Modifier.padding(innerPadding)) {
+                            Text(text = "Loading...")
+                        }
+                    } else {
+                        LazyColumn(modifier = Modifier.padding(innerPadding)) {
+                            items(surahList) { surah ->
+                                Text(text = surah.name.toString())
+                            }
+                        }
+                    }
                 }
             }
         }
