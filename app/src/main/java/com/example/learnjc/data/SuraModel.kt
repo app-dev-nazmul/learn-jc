@@ -4,8 +4,8 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "sura")
-data class Surah(
-    @PrimaryKey(autoGenerate = false)
+data class SuraModel(
+    @PrimaryKey(autoGenerate = true)
     val id: Int?, // <-- make it nullable if it's not NOT NULL in DB
     val name: String?, // make nullable if not set to NOT NULL in DB
     val name_ar: String? = null,

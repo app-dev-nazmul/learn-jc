@@ -11,7 +11,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import com.example.learnjc.data.SurahViewModel
+import com.example.learnjc.data.QuranViewModel
 import com.example.learnjc.ui.theme.LearnJCTheme
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
@@ -21,8 +21,9 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             LearnJCTheme {
-                val viewModel: SurahViewModel = getViewModel()
-                val surahList by viewModel.readAllSurah.collectAsState(initial = emptyList())
+
+                val viewModel: QuranViewModel = getViewModel()
+                val surahList by viewModel.readAllSura.collectAsState(initial = emptyList())
 
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     if (surahList.isEmpty()) {

@@ -5,7 +5,8 @@ import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface SuraDao {
+interface QuranDao {
     @Query("Select * from sura")
-    fun readSurah(): Flow<List<Surah>>
+    fun readAllSura(): Flow<List<SuraModel>>
+
 }
